@@ -16,6 +16,7 @@ client = Client(**config.pyrogram)
 
 
 def remove_future(future, key=None, ban_func: callable = None):
-    del futures[key]
+    if futures.get(key):
+        del futures[key]
     if not future.done():
         client.loop.create_task(ban_func())
