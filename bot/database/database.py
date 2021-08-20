@@ -20,13 +20,14 @@ class User(db.Entity):
     id = PrimaryKey(int, min=-10000000000000, size=64)
     first_name = Required(str)
     last_name = Optional(str)
-    ban_details = Optional(BanDetails)
-    banned_in_groups = Set("Group")
+    ban_details = Optional(BanDetails, reverse="banned_by")
+    banned_in_groups = Set("Group", reverse="banned_users")
+    owning_groups = Set("Group", reverse="owner")
 
 
 class Group(db.Entity):
     id = PrimaryKey(int, min=-10000000000000, size=64)
-    owner = Required(int, min=-10000000000000, size=64)
+    owner = Optional(User, reverse="owning_groups")
     time_to_ban = Required(int, default=60)
     default_language = Required(str, default=LanguagesEnum.HE)
-    banned_users = Set(User)
+    banned_users = Set(User, reverse="banned_in_groups")
