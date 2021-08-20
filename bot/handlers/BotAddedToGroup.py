@@ -7,13 +7,17 @@ from random import sample
 
 @Client.on_chat_member_updated(group)
 async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
-    if member.new_chat_member and member.new_chat_member.status not in {"kicked", "left", "restricted"}:
+    if (
+            member.new_chat_member
+            and member.new_chat_member.status not in {"kicked", "left", "restricted"}
+            and not member.old_chat_member
+    ):
         if member.new_chat_member.user.is_self:
             return await client.send_message(
                 member.chat.id,
                 strings.hebrew.bot_was_added,
                 reply_markup=types.InlineKeyboardMarkup([
-                    [types.InlineKeyboardButton(strings.hebrew.button_config, url=f"t.me/{config.bot.username}?start=conf-{member.chat.id}")]
+                    [types.InlineKeyboardButton(strings.hebrew.button_config, url=f"t.me/{config.bot.username}?start={member.chat.id}")]
                 ])
             )
         if message := await client.send_message(
