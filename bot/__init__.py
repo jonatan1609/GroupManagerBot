@@ -4,12 +4,13 @@ getLogger("pyrogram.crypto.aes").setLevel(ERROR)
 from pyrogram import Client
 from pyrogram.session import Session
 from dynaconf import Dynaconf
+from os import environ
 
 
 __version__ = "1.0.0"
 Session.notice_displayed = True
 futures = {}
-config = Dynaconf(settings_files=[".config.toml"])
+config = Dynaconf(settings_files=[environ.get("config_file", "config.toml")])
 strings = Dynaconf(settings_files=[".strings.toml"])
 client = Client(**config.pyrogram)
 
