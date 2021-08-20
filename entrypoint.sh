@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 CONFIG_FILE="/config/config.toml"
 if [ ! -f "$CONFIG_FILE" ]; then

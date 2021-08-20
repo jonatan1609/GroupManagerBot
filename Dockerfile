@@ -1,6 +1,7 @@
 FROM python:3.9.6-alpine
 
 USER root
+ENV PYTHONUNBUFFERED=1
 
 RUN \
 addgroup -S bot \
@@ -23,4 +24,6 @@ USER bot
 VOLUME [ "/config" ]
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["./entrypoint.sh"]
+CMD ["/opt/bot/entrypoint.sh"]
+
+LABEL org.opencontainers.image.source https://github.com/jonatan1609
