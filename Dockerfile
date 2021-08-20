@@ -24,3 +24,5 @@ VOLUME [ "/config" ]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["/opt/bot/entrypoint.sh"]
+
+LABEL org.opencontainers.image.source https://github.com/jonatan1609
