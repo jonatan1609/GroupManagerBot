@@ -23,4 +23,4 @@ USER bot
 VOLUME [ "/config" ]
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["./entrypoint.sh"]
+CMD ["/opt/bot/entrypoint.sh"]
