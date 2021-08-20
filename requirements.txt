@@ -1,6 +1,15 @@
 async-lru==1.0.2
+click==8.0.1
 dynaconf==3.1.4
+Flask==2.0.1
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+peewee==3.14.4
 pony==0.7.14
 pyaes==1.6.1
+Pygments==2.10.0
 Pyrogram==1.2.9
 PySocks==1.7.1
+sqlite-web==0.3.8
+Werkzeug==2.0.1
