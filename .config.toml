@@ -1,0 +1,14 @@
+[pyrogram]
+    session_name = "GroupManagerBot"
+    api_id=
+    api_hash=
+    bot_token=
+    [pyrogram.plugins]
+        root = "bot/handlers"
+
+[bot]
+    name = "Group Manager Bot"
+    username = "GroupManagerILBot"
+    [bot.database]
+        provider = "sqlite"
+        filename = "bot.sqlite"
