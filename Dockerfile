@@ -1,6 +1,7 @@
 FROM python:3.9.6-alpine
 
 USER root
+ENV PYTHONUNBUFFERED=1
 
 RUN \
 addgroup -S bot \
