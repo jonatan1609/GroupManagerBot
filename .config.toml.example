@@ -12,3 +12,4 @@
     [bot.database]
         provider = "sqlite"
         filename = "bot.sqlite"
+        create_db = true
