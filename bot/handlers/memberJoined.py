@@ -67,11 +67,11 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             future = Future()
             callback = lambda *_: remove_future(
                 future,
-                (member.chat.id, member.new_chat_member.user.id),
+                (member.chat.id, member.new_chat_member.user.id, message.message_id),
                 lambda: client.kick_chat_member(member.chat.id, member.new_chat_member.user.id)
             )
             future.add_done_callback(callback)
-            futures[(member.chat.id, member.new_chat_member.user.id)] = future
+            futures[(member.chat.id, member.new_chat_member.user.id, message.message_id)] = future
             client.loop.call_later(
                 60,
                 callback

@@ -19,4 +19,5 @@ def remove_future(future, key=None, ban_func: callable = None):
     if futures.get(key):
         del futures[key]
     if not future.done():
-        client.loop.create_task(ban_func())
+        client.loop.create_task(client.delete_messages(key[0], key[-1]))
+        return client.loop.create_task(ban_func())
