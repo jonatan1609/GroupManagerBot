@@ -68,7 +68,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             callback = lambda *_: remove_future(
                 future,
                 (member.chat.id, member.new_chat_member.user.id),
-                lambda: client.kick_chat_member(member.chat.id, member.new_chat_member.user.id, 3000)
+                lambda: client.kick_chat_member(member.chat.id, member.new_chat_member.user.id)
             )
             future.add_done_callback(callback)
             futures[(member.chat.id, member.new_chat_member.user.id)] = future

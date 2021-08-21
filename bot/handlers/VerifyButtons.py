@@ -26,7 +26,7 @@ async def i_am_a_bot(client: Client, callback: types.CallbackQuery):
     if future:
         future.set_result(False)
         await callback.message.edit_text(getattr(strings, group.default_language).bye)
-        await callback.message.chat.kick_member(callback.from_user.id, 3000)
+        await callback.message.chat.kick_member(callback.from_user.id)
         client.loop.call_later(3, lambda: client.loop.create_task(callback.message.delete()))
     else:
         await callback.answer(getattr(strings, group.default_language).message_not_for_you)
