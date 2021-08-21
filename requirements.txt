@@ -9,7 +9,7 @@ peewee==3.14.4
 pony==0.7.14
 pyaes==1.6.1
 Pygments==2.10.0
-Pyrogram==1.2.9
+Pyrogram @ git+https://github.com/jonatan1609/pyrogram@48413fc27b3bcccee8d5b96ddaa378da12a169d4
 PySocks==1.7.1
 sqlite-web==0.3.8
 Werkzeug==2.0.1
