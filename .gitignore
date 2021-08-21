@@ -7,6 +7,9 @@ __pycache__/
 *.session
 .idea
 
+# Databases stuff
+*.sqlite
+*.db
 # C extensions
 *.so
 
