@@ -7,7 +7,7 @@ from dynaconf import Dynaconf
 from os import environ
 
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 Session.notice_displayed = True
 futures = {}
 config = Dynaconf(settings_files=[environ.get("CONFIG_FILE", "config.toml")])
