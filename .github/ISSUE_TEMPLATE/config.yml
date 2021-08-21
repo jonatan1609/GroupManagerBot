@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Get support about the bot
+    url: https://t.me/GMB_group
+    about: This place is for either bug issues with the bot itself.
