@@ -43,10 +43,10 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                     )
             return await client.send_message(
                 member.chat.id,
-                getattr(strings, group.default_language).bot_was_added,
+                strings.bot_was_added,
                 reply_markup=types.InlineKeyboardMarkup([
                     [types.InlineKeyboardButton(
-                        getattr(strings, group.default_language).button_config,
+                        strings.button_config,
                         url=f"t.me/{config.bot.username}?start={member.chat.id}"
                     )]
                 ])

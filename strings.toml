@@ -1,4 +1,7 @@
 choose_language = "שלום {0}, אנא בחר שפה.\nHello {0}, choose your language please."
+bot_was_added = "@jinja היי, אני GroupManagerILBot ואני אעזור לכם בניהול הקבוצה. על מנת להגדיר אותי יש ללחוץ על הכפתור למטה, עד אז אני לא אעבוד. \n\nמה אני מציע ( בנתיים ) :\n{{'• '+this.hebrew.features | join('.\n• ')}}\n\n\nHi, I am GroupManagerILBot and i can help you to to manage your group and to prevent spam. \nIn order to set me up you need to click on the button below and follow the steps. \n\nCurrently the only things I can do are:\n {{'• '+this.english.features|join('.\n• ')}}"
+button_config = "לחץ כאן להגדרה | Press here to set up"
+
 [hebrew]
     welcome_to_the_group = "שלום {0} וברוכים הבאים לקבוצה!\nעומדים לרשותך {1} שניות ללחוץ על הכפתור לאשר שאתה לא בוט ;)\nבמידה ולא לחצת, לאחר {1} שניות תיחסם מהקבוצה."
     message_not_for_you = "אני מדמיין או שההודעה הזו לא פונה אליך?🧐"
@@ -6,16 +9,12 @@ choose_language = "שלום {0}, אנא בחר שפה.\nHello {0}, choose your l
     bye = "נחסמת :("
     i_am_a_bot = "אני בוט"
     i_am_a_human = "אני בן אדם"
-    features = ["כפתור 'אני בן אדם' לזיהוי בוטים."]
-    bot_was_added = "@jinja היי, אני GroupManagerILBot ואני אעזור לכם בניהול הקבוצה. על מנת להגדיר אותי יש ללחוץ על הכפתור למטה, עד אז אני לא אעבוד. \n\nמה אני מציע ( בנתיים ) :\n{{'•'+this.hebrew.features | join('\n•')}}"
-    button_config = "לחץ כאן להגדרה"
+    features = ["כפתור 'אני בן אדם' לזיהוי בוטים"]
     language_has_been_changed = "השפה שונתה בהצלחה!"
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
-    bot_was_added = "@jinja Hi, I am GroupManagerILBot and i can help you to to manage your group and to prevent spam. \nIn order to set me up you need to click on the button below and follow the steps. \n Currently the only things I can do are: {{'•'+this.english.features|join('\n•')}}"
     language_has_been_changed = "The language has been changed successfully"
-    button_config = "Press here to set up"
     welcome_to_the_group = "Hello {0} and welcome to the group!\n You have {1} seconds to press the right button. Otherwise, you will be banned within {1} seconds."
     message_not_for_you = "Who are you?🧐"
     welcome = "Welcome!"
