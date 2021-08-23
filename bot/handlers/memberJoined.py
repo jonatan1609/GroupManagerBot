@@ -15,6 +15,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             and not member.old_chat_member
     ):
         if member.new_chat_member.user.is_self:
+            administrators = []
             with db_session:
                 administrators = [
                     (x.user.id, x.user.first_name, x.user.last_name, x.status)
@@ -29,8 +30,8 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                 user = User.get(id=creator[0])
                 if not user:
                     user = User(
-                        id=creator[0],
-                        first_name=creator[1],
+                        id=creator[0] or -1,
+                        first_name=creator[1] or "Deleted account",
                         last_name=creator[2] or ""
                     )
                 group = Group.get(id=member.chat.id)
