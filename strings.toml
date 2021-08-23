@@ -11,6 +11,7 @@ button_config = "לחץ כאן להגדרה | Press here to set up"
     i_am_a_human = "אני בן אדם"
     features = ["כפתור 'אני בן אדם' לזיהוי בוטים"]
     language_has_been_changed = "השפה שונתה בהצלחה!"
+    welcome_to_panel  = "@jinja ברוך הבא לפאנל הניהול!\nלפאנל זה רק מנהלים מורשים יכולים להיכנס (בברירת מחדל - כל המנהלים) ופה ניתן לערוך את ההגדרות של הקבוצה.\n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
@@ -21,3 +22,4 @@ button_config = "לחץ כאן להגדרה | Press here to set up"
     bye = "You got banned :("
     i_am_a_bot = "I am a bot"
     i_am_a_human = "I am a human"
+    welcome_to_panel = "@jinja Welcome to the administration panel!\nOnly allowed admins can use this panel (By default - every admin), and here you can edit your group configuration.\n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
