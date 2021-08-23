@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 # ordinary files
-*.session
 .idea
 
 # Databases stuff
@@ -137,3 +136,8 @@ dmypy.json
 
 # Bot config file
 config.toml
+
+# pyrogram
+unknown_errors.txt
+*.session
+*.session-journal
