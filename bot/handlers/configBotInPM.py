@@ -7,7 +7,10 @@ from pony.orm import db_session
 
 
 def split(array: list, group: int) -> list:
-    return [[types.InlineKeyboardButton(x, f'lang={x};{group}') for x in array[x: x + 2]] for x in range(0, len(array), 2)]
+    return [
+        [types.InlineKeyboardButton(x, f'langs={x};{group}')
+         for x in array[x: x + 2]] for x in range(0, len(array), 2)
+    ]
 
 
 @Client.on_message(start_config)
