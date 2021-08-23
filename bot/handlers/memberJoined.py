@@ -5,6 +5,7 @@ from .. import futures, remove_future, strings, config
 from random import sample
 from pony.orm import db_session
 from ..database import Group, User
+from ..utils import fetch_admins
 
 
 @Client.on_chat_member_updated(group)
@@ -17,16 +18,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
         if member.new_chat_member.user.is_self:
             administrators = []
             with db_session:
-                administrators = [
-                    (x.user.id, x.user.first_name, x.user.last_name, x.status)
-                    async for x in client.iter_chat_members(
-                        member.chat.id,
-                        filter="administrators"
-                    )
-                ]
-                creator = next((x for x in administrators if x[-1] == "creator"), 0)
-                if creator:
-                    administrators.remove(creator)
+                creator, administration = await fetch_admins(client, member)
                 user = User.get(id=creator[0])
                 if not user:
                     user = User(
@@ -35,6 +27,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                         last_name=creator[2] or ""
                     )
                 group = Group.get(id=member.chat.id)
+
                 if not group:
                     administrators = [User(id=x[0], first_name=x[1], last_name=x[2] or "") for x in administrators]
                     group = Group(
