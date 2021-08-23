@@ -18,7 +18,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
         if member.new_chat_member.user.is_self:
             administrators = []
             with db_session:
-                creator, administration = await fetch_admins(client, member)
+                creator, administration = await fetch_admins(client, member.chat.id)
                 user = User.get(id=creator[0])
                 if not user:
                     user = User(

@@ -1,8 +1,8 @@
-async def fetch_admins(client, message):
+async def fetch_admins(client, chat_id):
     administrators = [
         (x.user.id, x.user.first_name, x.user.last_name, x.status)
         async for x in client.iter_chat_members(
-            message.chat.id,
+            chat_id,
             filter="administrators"
         )
     ]
