@@ -10,13 +10,13 @@ addgroup -S bot \
   && chown -R bot:bot /config \
   && chmod -R 775 /config \
 && apk add --no-cache \
-            tini
+            tini git
 
 WORKDIR /opt/bot
 COPY . /opt/bot/
 
 RUN \
-pip install -r requirements.txt \
+pip install --no-cache-dir -r requirements.txt \
 && mv /opt/bot/.config.toml.example /opt/bot/.config.toml.example \
 && chown -R bot:bot /opt/bot
 
