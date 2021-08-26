@@ -1,7 +1,7 @@
 ---
 name: Bug report - bot
 about: Create a report to help us improve the bot
-title: "[BUG] [BOT]"
+title: "[BUG] [BOT] - Your issue"
 labels: bug
 assignees: jonatan1609
 
