@@ -5,11 +5,19 @@ This bot will help you to manage your groups and to avoid spam.
 
 You can run the bot on your environment or use docker.
 
+## configuration
+
+Copy `.config.toml.example` into `config.toml` 
+and fill the relevant fields. `api_id` and `api_hash`
+which you can obtain from https://my.telegram.org, and bot_token which you can get from https://t.me/botfather.
+- You can also choose what Database you want to use. read pony.orm documentation and modify the entire block under bot.database with the relevant fields that pony.orm.Database requires.
+
 ## venv (linux)
-Configure the `config.toml` file and run
+
 ```
-./start.sh
+sh start.sh
 ```
+
 ## Docker
 > Use `:latest` for latest published version, you can specify a release or even a branch and commit.
 e.g `:master-d1dc0d4`
@@ -26,3 +34,7 @@ e.g `:master-d1dc0d4`
     docker run -v ~/group-manager-config:/config \
     ghcr.io/jonatan1609/group-manager-bot:latest
     ```
+   
+# support
+
+You can join our [Telegram Group](https://t.me/GMB_group) to get live support with either the bot itself or related stuff.
