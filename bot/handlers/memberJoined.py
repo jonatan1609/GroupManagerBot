@@ -16,9 +16,8 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             and not member.old_chat_member
     ):
         if member.new_chat_member.user.is_self:
-            administrators = []
             with db_session:
-                creator, administration = await fetch_admins(client, member.chat.id)
+                creator, administrators = await fetch_admins(client, member.chat.id)
                 user = User.get(id=creator[0])
                 if not user:
                     user = User(
@@ -29,7 +28,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                 group = Group.get(id=member.chat.id)
 
                 if not group:
-                    administrators = [User(id=x[0], first_name=x[1], last_name=x[2] or "") for x in administrators]
+                    administrators = [User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "") for x in administrators]
                     Group(
                         id=member.chat.id,
                         owner=user,
