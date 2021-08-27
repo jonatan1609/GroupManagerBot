@@ -10,7 +10,7 @@ keyboard = types.InlineKeyboardMarkup(split(LanguagesEnum.map(), -1))
 
 
 @Client.on_message(private & start)
-def start(_: Client, message: types.Message):
+async def start(_: Client, message: types.Message):
     with db_session:
         if not User.get(id=message.from_user.id):
             User(
@@ -18,9 +18,13 @@ def start(_: Client, message: types.Message):
                 first_name=message.from_user.first_name,
                 last_name=message.from_user.last_name or "",
             )
-            message.reply(
+            await message.reply(
                 strings.welcome_to_bot_new.format(message.from_user.first_name, config.bot.name),
                 reply_markup=keyboard
             )
         else:
-            message.reply(getattr(strings, User[message.from_user.id].language).welcome_to_the_bot.format(config.bot.name))
+            await message.reply(
+                getattr(strings, User[message.from_user.id].language).welcome_to_the_bot.format(
+                    config.bot.name
+                )
+            )

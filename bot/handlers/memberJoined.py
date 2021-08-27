@@ -25,10 +25,11 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                         first_name=creator[1] or "Deleted account",
                         last_name=creator[2] or ""
                     )
-                group = Group.get(id=member.chat.id)
-
-                if not group:
-                    administrators = [User.get(id=x[0]) or User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "") for x in administrators]
+                if not Group.get(id=member.chat.id):
+                    administrators = [
+                        User.get(id=x[0]) or User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "")
+                        for x in administrators
+                    ]
                     Group(
                         id=member.chat.id,
                         owner=user,
@@ -52,8 +53,12 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                 group.time_to_ban,
             ), reply_markup=types.InlineKeyboardMarkup([
                     *sample([
-                        [types.InlineKeyboardButton(getattr(strings, group.default_language).i_am_a_bot, callback_data="bot")],
-                        [types.InlineKeyboardButton(getattr(strings, group.default_language).i_am_a_human, callback_data="human")]
+                        [types.InlineKeyboardButton(
+                            getattr(strings, group.default_language).i_am_a_bot, callback_data="bot"
+                        )],
+                        [types.InlineKeyboardButton(
+                            getattr(strings, group.default_language).i_am_a_human, callback_data="human"
+                        )]
                     ], 2)
                 ])
         ):
