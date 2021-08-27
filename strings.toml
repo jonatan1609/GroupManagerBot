@@ -1,6 +1,7 @@
 choose_language = "שלום {0}, אנא בחר שפה.\nHello {0}, choose your language please."
 bot_was_added = "@jinja היי, אני GroupManagerILBot ואני אעזור לכם בניהול הקבוצה. על מנת להגדיר אותי יש ללחוץ על הכפתור למטה, עד אז אני לא אעבוד. \n\nמה אני מציע ( בנתיים ) :\n{{'• '+this.hebrew.features | join('.\n• ')}}\n\n\nHi, I am GroupManagerILBot and i can help you to to manage your group and to prevent spam. \nIn order to set me up you need to click on the button below and follow the steps. \n\nCurrently the only things I can do are:\n {{'• '+this.english.features|join('.\n• ')}}"
 button_config = "לחץ כאן להגדרה | Press here to set up"
+welcome_to_bot_new = "Hi {0}, and welcome to {1}.\nPress the buttons below to change your language.\n\n\n שלום {0} וברוכים הבאים ל {1}, בבקשה תלחץ על הכפתורים למטה על מנת לשנות את השפה."
 
 [hebrew]
     welcome_to_the_group = "שלום {0} וברוכים הבאים לקבוצה!\nעומדים לרשותך {1} שניות ללחוץ על הכפתור לאשר שאתה לא בוט ;)\nבמידה ולא לחצת, לאחר {1} שניות תיחסם מהקבוצה."
@@ -12,8 +13,9 @@ button_config = "לחץ כאן להגדרה | Press here to set up"
     features = ["כפתור 'אני בן אדם' לזיהוי בוטים"]
     language_has_been_changed = "השפה שונתה בהצלחה!"
     refresh_admins = "רענן רשימת מנהלים"
-    available_commands = ["/admins - צפיה וריענון רשימת המנהלים בבוט"]
+    available_commands = ["/admins - צפיה וריענון רשימת המנהלים בבוט", "/language - שינוי השפה בבוט"]
     welcome_to_panel  = "@jinja ברוך הבא לפאנל הניהול!\nלפאנל זה רק מנהלים מורשים יכולים להיכנס (בברירת מחדל - כל המנהלים) ופה ניתן לערוך את ההגדרות של הקבוצה.\n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
+    welcome_to_the_bot = "@jinja  ברוכים הבאים ל {}, \n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
@@ -25,5 +27,6 @@ button_config = "לחץ כאן להגדרה | Press here to set up"
     i_am_a_bot = "I am a bot"
     i_am_a_human = "I am a human"
     refresh_admins = "Refresh admins list"
-    available_commands = ['/admins - watch and refresh your admins list']
+    available_commands = ['/admins - watch and refresh your admins list', '/language - set up your language in the bot']
     welcome_to_panel = "@jinja Welcome to the administration panel!\nOnly allowed admins can use this panel (By default - every admin), and here you can edit your group configuration.\n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
+    welcome_to_the_bot = "@jinja Welcome to {}, \n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
