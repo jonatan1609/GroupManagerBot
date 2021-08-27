@@ -20,6 +20,7 @@ class User(db.Entity):
     id = PrimaryKey(int, min=-10000000000000, size=64)
     first_name = Required(str)
     last_name = Optional(str)
+    language = Required(str, default=LanguagesEnum.HE, sql_default=LanguagesEnum.HE)
     ban_details = Optional(BanDetails, reverse="banned_by")
     banned_in_groups = Set("Group", reverse="banned_users")
     owning_groups = Set("Group", reverse="owner")
