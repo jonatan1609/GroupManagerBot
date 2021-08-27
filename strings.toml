@@ -16,6 +16,8 @@ welcome_to_bot_new = "Hi {0}, and welcome to {1}.\nPress the buttons below to ch
     available_commands = ["/admins - צפיה וריענון רשימת המנהלים בבוט", "/language - שינוי השפה בבוט"]
     welcome_to_panel  = "@jinja ברוך הבא לפאנל הניהול!\nלפאנל זה רק מנהלים מורשים יכולים להיכנס (בברירת מחדל - כל המנהלים) ופה ניתן לערוך את ההגדרות של הקבוצה.\n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
     welcome_to_the_bot = "@jinja  ברוכים הבאים ל {}, \n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
+    your_admins_list = "List of admins in the group:\n\n"
+    choose_group = "Choose the desired group from the menu below"
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
@@ -30,3 +32,5 @@ welcome_to_bot_new = "Hi {0}, and welcome to {1}.\nPress the buttons below to ch
     available_commands = ['/admins - watch and refresh your admins list', '/language - set up your language in the bot']
     welcome_to_panel = "@jinja Welcome to the administration panel!\nOnly allowed admins can use this panel (By default - every admin), and here you can edit your group configuration.\n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
     welcome_to_the_bot = "@jinja Welcome to {}, \n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
+    your_admins_list = "רשימת המנהלים בקבוצה:\n\n"
+    choose_group = "תבחר קבוצה רצויה מהתפריט למטה"
