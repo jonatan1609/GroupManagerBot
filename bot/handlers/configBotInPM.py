@@ -7,8 +7,9 @@ from pony.orm import db_session
 
 
 def split(array: list, group: int) -> list:
+    s = "s" if group != -1 else ""
     return [
-        [types.InlineKeyboardButton(x, f'langs={x};{group}')
+        [types.InlineKeyboardButton(x, f'lang{s}={x};{group}')
          for x in array[x: x + 2]] for x in range(0, len(array), 2)
     ]
 
