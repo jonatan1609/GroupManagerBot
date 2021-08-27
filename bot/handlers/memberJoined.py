@@ -28,7 +28,7 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                 group = Group.get(id=member.chat.id)
 
                 if not group:
-                    administrators = [User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "") for x in administrators]
+                    administrators = [User.get(id=x[0]) or User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "") for x in administrators]
                     Group(
                         id=member.chat.id,
                         owner=user,
