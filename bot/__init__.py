@@ -20,6 +20,6 @@ cache = Cache(60 * 60 * 24, admins=Cache(60 * 60 * 24), names=Cache(60 * 60 * 24
 def remove_future(future, key=None, ban_func: callable = None):
     if futures.get(key):
         del futures[key]
-    if not future.done():
-        client.loop.create_task(client.delete_messages(key[0], key[-1]))
-        return client.loop.create_task(ban_func())
+    client.loop.create_task(client.delete_messages(key[0], key[-1]))
+    if (future.done() and not future.result()) or not future.done():
+        client.loop.create_task(ban_func())
