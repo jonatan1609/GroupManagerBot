@@ -18,6 +18,7 @@ welcome_to_bot_new = "Hi {0}, and welcome to {1}.\nPress the buttons below to ch
     welcome_to_the_bot = "@jinja  ברוכים הבאים ל {}, \n\n\nאפשרויות זמינות:\n{{ this.hebrew.available_commands | join('.\n') }}"
     your_admins_list = "List of admins in the group:\n\n"
     choose_group = "Choose the desired group from the menu below"
+    no_groups = "אין לך עדיין שום קבוצה."
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
@@ -34,3 +35,4 @@ welcome_to_bot_new = "Hi {0}, and welcome to {1}.\nPress the buttons below to ch
     welcome_to_the_bot = "@jinja Welcome to {}, \n\n\nAvailable options:\n {{ this.english.available_commands | join('.\n') }}"
     your_admins_list = "רשימת המנהלים בקבוצה:\n\n"
     choose_group = "תבחר קבוצה רצויה מהתפריט למטה"
+    no_groups = "You don't have any groups yet."

@@ -20,21 +20,27 @@ def split(array: list, prefix: str):
 
 @Client.on_message(show_admins_list)
 async def show_admins_list(client: Client, message: types.Message):
+    groups = []
     with db_session:
         user = User.get(id=message.from_user.id)
-        groups = [
-            group.id for group in ([group for group in user.admin_in_groups] + [group for group in user.owning_groups])
-        ]
+        if user:
+            groups.extend([
+                group.id for group in ([group for group in user.admin_in_groups] + [group for group in user.owning_groups])
+            ])
         for group in groups:
             if group not in cache["names"]:
                 cache["names"].insert(group, await fetch_group_name(client, group))
             if group not in cache["admins"]:
                 cache["admins"].insert(group, await fetch_admins(client, group))
-
-        await message.reply(
-            getattr(strings, user.language).choose_group,
-            reply_markup=types.InlineKeyboardMarkup(split(groups, "adm"))
-        )
+        if groups:
+            await message.reply(
+                getattr(strings, user.language).choose_group,
+                reply_markup=types.InlineKeyboardMarkup(split(groups, "adm"))
+            )
+        else:
+            await message.reply(
+                getattr(strings, user.language).no_groups
+            )
 
 
 @Client.on_callback_query(select_group__show_admins)
