@@ -17,7 +17,14 @@ async def change_language_callback(_: Client, callback: types.CallbackQuery):
             await callback.answer(getattr(strings, language).language_has_been_changed)
             await callback.message.edit_text(getattr(strings, language).welcome_to_panel)
         else:
-            user = User[callback.from_user.id]
+            user = User.get(id=callback.from_user.id)
+            if not user:
+                user = User(
+                    id=callback.from_user.id,
+                    first_name=callback.from_user.first_name,
+                    last_name=callback.from_user.last_name or "",
+                    language=language
+                )
             if user.language != language:
                 user.language = language
             await callback.answer(getattr(strings, language).language_has_been_changed)
