@@ -33,7 +33,7 @@ async def show_admins_list(client: Client, message: types.Message):
         await message.reply(
             getattr(strings, user.language).choose_group,
             reply_markup=types.InlineKeyboardMarkup(split(groups, "adm"))
-        ),
+        )
 
 
 @Client.on_callback_query(select_group__show_admins)
