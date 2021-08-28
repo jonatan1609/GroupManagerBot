@@ -12,7 +12,8 @@ def split(array: list, prefix: str):
             types.InlineKeyboardButton(
                 cache["names"].get(chat, "<unknown>"),
                 f"{prefix}={chat}"
-            ) for chat in array[x: x + 2]]
+            ) for chat in array[x: x + 2]
+        ]
         for x in range(0, len(array), 2)
     ]
 
