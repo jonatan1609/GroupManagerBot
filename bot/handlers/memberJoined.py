@@ -1,7 +1,7 @@
 from pyrogram import Client, types
 from ..filters import group
 from asyncio import Future
-from .. import futures, remove_future, strings, config
+from .. import futures, remove_future, strings, config, cache, banned_permissions
 from random import sample
 from pony.orm import db_session
 from ..database import Group, User
@@ -11,9 +11,9 @@ from ..utils import fetch_admins
 @Client.on_chat_member_updated(group)
 async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
     if (
-            member.new_chat_member
-            and member.new_chat_member.status not in {"kicked", "left", "restricted"}
-            and not member.old_chat_member
+        member.new_chat_member
+        and member.new_chat_member.is_member
+        and member.date == member.new_chat_member.joined_date
     ):
         if member.new_chat_member.user.is_self:
             with db_session:
@@ -45,6 +45,10 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                     )]
                 ])
             )
+        await member.chat.restrict_member(
+            member.new_chat_member.user.id,
+            banned_permissions
+        )
         with db_session:
             group = Group[member.chat.id]
         if message := await client.send_message(
@@ -74,3 +78,5 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                 60,
                 callback
             )
+            if not cache["permissions"].get(member.chat.id):
+                cache["permissions"][member.chat.id] = member.chat.permissions
