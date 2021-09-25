@@ -5,16 +5,13 @@ from .. import futures, remove_future, strings, config, cache, banned_permission
 from random import sample
 from pony.orm import db_session
 from ..database import Group, User
-from ..utils import fetch_admins
+from ..utils import fetch_admins, is_member
 
 
 @Client.on_chat_member_updated(group)
 async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
-    if (
-        member.new_chat_member
-        and member.new_chat_member.is_member
-        and member.date == member.new_chat_member.joined_date
-    ):
+
+    if is_member(member):
         if member.new_chat_member.user.is_self:
             with db_session:
                 creator, administrators = await fetch_admins(client, member.chat.id)

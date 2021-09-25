@@ -1,3 +1,6 @@
+from pyrogram.types import ChatMemberUpdated
+
+
 async def fetch_admins(client, chat_id):
     administrators = [
         (x.user.id, x.user.first_name, x.user.last_name, x.status)
@@ -30,3 +33,15 @@ def format_admins(creator: str, admins: list, wrap: callable = str, key=lambda x
     else:
         lines.insert(1, creator_line + wrap(creator))
     return "\n".join(lines)
+
+
+def is_member(update: ChatMemberUpdated) -> bool:
+    new = False
+    if update.old_chat_member and update.new_chat_member:
+        if update.old_chat_member.status == "restricted":
+            if not update.old_chat_member.is_member and update.new_chat_member.is_member:
+                new = True
+    elif update.new_chat_member and not update.old_chat_member:
+        if update.new_chat_member.status in {"restricted", "member"}:
+            new = True
+    return new
