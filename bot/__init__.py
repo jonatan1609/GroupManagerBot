@@ -8,7 +8,7 @@ from os import environ
 from .cache import Cache
 
 
-__version__ = "1.0.7"
+__version__ = "1.0.8"
 Session.notice_displayed = True
 futures = {}
 config = Dynaconf(settings_files=[environ.get("CONFIG_FILE", "config.toml")])
