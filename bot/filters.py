@@ -12,3 +12,4 @@ version = filters.command('version')
 show_admins_list = private & filters.command('admins')
 refresh_admins_list = filters.regex('^refadm')
 select_group__show_admins = filters.regex("^adm=")
+service = filters.group & filters.service
