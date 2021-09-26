@@ -1,4 +1,4 @@
-from pyrogram import Client, types
+from pyrogram import Client, types, errors
 from ..filters import human, bot
 from .. import futures, strings
 from ..database import Group
@@ -6,8 +6,7 @@ from pony.orm import db_session
 from loguru import logger
 
 
-@Client.on_callback_query(human)
-async def i_am_a_human(_: Client, callback: types.CallbackQuery):
+async def get_future(client, callback):
     future = futures.get(
         (
             callback.message.chat.id,
@@ -18,7 +17,23 @@ async def i_am_a_human(_: Client, callback: types.CallbackQuery):
     with db_session:
         group = Group.get(id=callback.message.chat.id)
         if not group:
-            return logger.error(f"Group {callback.message.chat.id} not found!")
+            logger.error(f"Group {callback.message.chat.id} not found!")
+            try:
+                return await client.send_message(
+                    callback.message.chat.id,
+                    strings.readd_group
+                )
+            except errors.RPCError as e:
+                return logger.error(e.MESSAGE)
+    return future, group
+
+
+@Client.on_callback_query(human)
+async def i_am_a_human(client: Client, callback: types.CallbackQuery):
+    future, *group = await get_future(client, callback)
+    group, = group
+    if not group:
+        return
     if future:
         future.set_result(True)
     else:
@@ -28,18 +43,11 @@ async def i_am_a_human(_: Client, callback: types.CallbackQuery):
 
 
 @Client.on_callback_query(bot)
-async def i_am_a_bot(_: Client, callback: types.CallbackQuery):
-    future = futures.get(
-        (
-            callback.message.chat.id,
-            callback.from_user.id,
-            callback.message.message_id
-        )
-    )
-    with db_session:
-        group = Group.get(id=callback.message.chat.id)
-        if not group:
-            return logger.error(f"Group {callback.message.chat.id} not found!")
+async def i_am_a_bot(client: Client, callback: types.CallbackQuery):
+    future, *group = await get_future(client, callback)
+    group, = group
+    if not group:
+        return
     if future:
         future.set_result(False)
     else:
