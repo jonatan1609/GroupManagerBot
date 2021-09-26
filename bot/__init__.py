@@ -30,4 +30,10 @@ def remove_future(future, key=None, ban_func: callable = None):
     if (future.done() and not future.result()) or not future.done():
         client.loop.create_task(ban_func())
     elif future.done() and future.result():
-        client.loop.create_task(client.restrict_chat_member(key[0], key[1], cache["permissions"][key[0]]))
+        client.loop.create_task(
+            client.restrict_chat_member(
+                key[0],
+                key[1],
+                cache["permissions"][key[0]]
+            )
+        )

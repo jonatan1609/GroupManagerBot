@@ -19,12 +19,17 @@ async def start(_: Client, message: types.Message):
                 last_name=message.from_user.last_name or "",
             )
             await message.reply(
-                strings.welcome_to_bot_new.format(message.from_user.first_name, config.bot.name),
+                strings.welcome_to_bot_new.format(
+                    message.from_user.first_name, config.bot.name
+                ),
                 reply_markup=keyboard
             )
         else:
             await message.reply(
-                getattr(strings, User[message.from_user.id].language).welcome_to_the_bot.format(
+                getattr(
+                    strings,
+                    User[message.from_user.id].language
+                ).welcome_to_the_bot.format(
                     config.bot.name
                 )
             )

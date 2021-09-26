@@ -49,16 +49,25 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
         with db_session:
             group = Group[member.chat.id]
         if message := await client.send_message(
-            member.chat.id, getattr(strings, group.default_language).welcome_to_the_group.format(
-                f"[{member.new_chat_member.user.first_name}](tg://user?id={member.new_chat_member.user.id})",
+            member.chat.id, getattr(
+                    strings, group.default_language
+                ).welcome_to_the_group.format(
+                f"[{member.new_chat_member.user.first_name}]"
+                f"(tg://user?id={member.new_chat_member.user.id})",
                 group.time_to_ban,
             ), reply_markup=types.InlineKeyboardMarkup([
                     *sample([
                         [types.InlineKeyboardButton(
-                            getattr(strings, group.default_language).i_am_a_bot, callback_data="bot"
+                            getattr(
+                                strings, group.default_language
+                            ).i_am_a_bot,
+                            callback_data="bot"
                         )],
                         [types.InlineKeyboardButton(
-                            getattr(strings, group.default_language).i_am_a_human, callback_data="human"
+                                getattr(
+                                    strings, group.default_language
+                                ).i_am_a_human,
+                                callback_data="human"
                         )]
                     ], 2)
                 ])
@@ -66,11 +75,24 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             future = Future()
             callback = lambda *_: remove_future(
                 future,
-                (member.chat.id, member.new_chat_member.user.id, message.message_id),
-                lambda: client.kick_chat_member(member.chat.id, member.new_chat_member.user.id)
+                (
+                    member.chat.id,
+                    member.new_chat_member.user.id,
+                    message.message_id
+                ),
+                lambda: client.kick_chat_member(
+                    member.chat.id,
+                    member.new_chat_member.user.id
+                )
             )
             future.add_done_callback(callback)
-            futures[(member.chat.id, member.new_chat_member.user.id, message.message_id)] = future
+            futures[
+                (
+                    member.chat.id,
+                    member.new_chat_member.user.id,
+                    message.message_id
+                )
+            ] = future
             client.loop.call_later(
                 60,
                 callback

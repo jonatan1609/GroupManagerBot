@@ -17,5 +17,9 @@ class LanguagesEnum(enum.Enum, metaclass=Meta):
 
     def map(self=None):
         if not self:
-            return [obj.map().title() for obj in tuple(LanguagesEnum._member_map_.values())[:-1]]
+            return [
+                obj.map().title() for obj in tuple(
+                    LanguagesEnum._member_map_.values()
+                )[:-1]
+            ]
         return self.MAP_DICT.value.get(self.value, "")

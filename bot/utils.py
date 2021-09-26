@@ -19,7 +19,12 @@ async def fetch_group_name(client, chat_id):
     return (await client.get_chat(chat_id)).title
 
 
-def format_admins(creator: str, admins: list, wrap: callable = str, key=lambda x: x):
+def format_admins(
+        creator: str,
+        admins: list,
+        wrap: callable = str,
+        key=lambda x: x
+):
     upper = "╔"
     middle = "╟"
     bottom = "╙"
@@ -27,7 +32,9 @@ def format_admins(creator: str, admins: list, wrap: callable = str, key=lambda x
     creator_line = "═"
     lines = []
     if admins:
-        lines.append(upper + creator_line * len(max(admins, key=key)[1] or 4) + wrap(creator))
+        lines.append(upper + creator_line * (
+                len(max(admins, key=key)[1] or 4) - len(creator)
+        ) + wrap(creator))
         lines.extend([middle + line + wrap(admin) for admin in admins[:-1]])
         lines.append(bottom + line + wrap(admins[-1]))
     else:
@@ -39,7 +46,8 @@ def is_member(update: ChatMemberUpdated) -> bool:
     new = False
     if update.old_chat_member and update.new_chat_member:
         if update.old_chat_member.status == "restricted":
-            if not update.old_chat_member.is_member and update.new_chat_member.is_member:
+            if not update.old_chat_member.is_member \
+                    and update.new_chat_member.is_member:
                 new = True
     elif update.new_chat_member and not update.old_chat_member:
         if update.new_chat_member.status in {"restricted", "member"}:
