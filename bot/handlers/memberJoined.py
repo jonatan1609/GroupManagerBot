@@ -6,17 +6,19 @@ from random import sample
 from pony.orm import db_session
 from ..database import Group, User
 from ..utils import fetch_admins, is_member
+from loguru import logger
 
 
 @Client.on_chat_member_updated(group)
 async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
-
     if is_member(member):
         if member.new_chat_member.user.is_self:
             with db_session:
                 creator, administrators = await fetch_admins(client, member.chat.id)
                 user = User.get(id=creator[0])
                 if not user:
+                    logger.debug(f"User {creator[0]} not found,"
+                                 f" adding to database")
                     user = User(
                         id=creator[0] or -1,
                         first_name=creator[1] or "Deleted account",
@@ -27,6 +29,8 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                         User.get(id=x[0]) or User(id=x[0], first_name=x[1] or "Deleted Account", last_name=x[2] or "")
                         for x in administrators
                     ]
+                    logger.debug(f"Group {member.chat.id} not found,"
+                                 f" adding to database")
                     Group(
                         id=member.chat.id,
                         owner=user,
@@ -42,12 +46,16 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
                     )]
                 ])
             )
+        with db_session:
+            group = Group.get(id=member.chat.id)
+            if not group:
+                logger.error(f"Group {member.chat.id} is not in database")
+                return  # todo: tell the user to re-add the bot to his group
+        logger.info(f"Restricting user {member.new_chat_member.user.id}")
         await member.chat.restrict_member(
             member.new_chat_member.user.id,
             banned_permissions
         )
-        with db_session:
-            group = Group[member.chat.id]
         if message := await client.send_message(
             member.chat.id, getattr(
                     strings, group.default_language

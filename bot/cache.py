@@ -1,5 +1,7 @@
 from asyncio import get_running_loop, get_event_loop
 from functools import partial
+from loguru import logger
+from .utils import shorten
 
 
 class Cache(dict):
@@ -18,7 +20,11 @@ class Cache(dict):
             ttl = self.default_time
 
         self[key] = value
+        logger.info(f"Key - {shorten(key)!r}, "
+                    f"Value - {shorten(value)!r} "
+                    f"was inserted to cache for {ttl} seconds")
         self.loop.call_later(ttl, partial(self.delete, key))
 
     def delete(self, key):
         del self[key]
+        logger.info(f"Key - {shorten(key)!r} was deleted from cache")

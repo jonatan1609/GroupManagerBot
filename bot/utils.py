@@ -53,3 +53,11 @@ def is_member(update: ChatMemberUpdated) -> bool:
         if update.new_chat_member.status in {"restricted", "member"}:
             new = True
     return new
+
+
+def shorten(obj) -> str:
+    as_str = str(obj)
+    if len(as_str) > 10:
+        as_str = as_str[:5] + " ... " + as_str[-2:]
+
+    return as_str

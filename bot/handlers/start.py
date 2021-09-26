@@ -5,6 +5,8 @@ from .. import strings, config
 from .configBotInPM import split
 from pony.orm import db_session
 from pyrogram import Client, types
+from loguru import logger
+
 
 keyboard = types.InlineKeyboardMarkup(split(LanguagesEnum.map(), -1))
 
@@ -13,6 +15,8 @@ keyboard = types.InlineKeyboardMarkup(split(LanguagesEnum.map(), -1))
 async def start(_: Client, message: types.Message):
     with db_session:
         if not User.get(id=message.from_user.id):
+            logger.debug(f"User {message.from_user.id} not found,"
+                         f" adding to database")
             User(
                 id=message.from_user.id,
                 first_name=message.from_user.first_name,
