@@ -3,6 +3,7 @@ from ..filters import human, bot
 from .. import futures, strings
 from ..database import Group
 from pony.orm import db_session
+from loguru import logger
 
 
 @Client.on_callback_query(human)
@@ -15,7 +16,9 @@ async def i_am_a_human(_: Client, callback: types.CallbackQuery):
         )
     )
     with db_session:
-        group = Group[callback.message.chat.id]
+        group = Group.get(id=callback.message.chat.id)
+        if not group:
+            logger.error(f"Group {callback.message.chat.id} not found!")
     if future:
         future.set_result(True)
     else:
@@ -34,7 +37,9 @@ async def i_am_a_bot(_: Client, callback: types.CallbackQuery):
         )
     )
     with db_session:
-        group = Group[callback.message.chat.id]
+        group = Group.get(id=callback.message.chat.id)
+        if not group:
+            logger.error(f"Group {callback.message.chat.id} not found!")
     if future:
         future.set_result(False)
     else:

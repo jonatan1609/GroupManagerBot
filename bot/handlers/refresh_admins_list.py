@@ -8,6 +8,7 @@ from ..filters import (
     select_group__show_admins,
     refresh_admins_list
 )
+from loguru import logger
 
 
 def split(array: list, prefix: str):
@@ -27,19 +28,26 @@ async def show_admins_list(client: Client, message: types.Message):
     groups = []
     with db_session:
         user = User.get(id=message.from_user.id)
-        if user:
-            groups.extend([
-                group.id for group in (
-                        [group for group in user.admin_in_groups] +
-                        [group for group in user.owning_groups]
-                )
-            ])
+        if not user:
+            logger.debug(f"User {message.from_user.id} not found,"
+                         f" adding to database")
+            return await message.reply(
+                getattr(strings, user.language).no_groups
+            )
+        groups.extend([
+            group.id for group in (
+                    [group for group in user.admin_in_groups] +
+                    [group for group in user.owning_groups]
+            )
+        ])
         for group in groups:
             if group not in cache["names"]:
+                logger.info(f"fetching group name for {group}")
                 cache["names"].insert(
                     group, await fetch_group_name(client, group)
                 )
             if group not in cache["admins"]:
+                logger.info(f"Fetching admins list for {group}")
                 cache["admins"].insert(group, await fetch_admins(client, group))
         if groups:
             await message.reply(
@@ -57,10 +65,14 @@ async def show_admins(client: Client, callback: types.CallbackQuery):
     _, _, group = callback.data.partition("=")
     group = int(group)
     if group not in cache["admins"]:
+        logger.info(f"Fetching admins list for {group}")
         cache["admins"].insert(group, await fetch_admins(client, group))
     creator, admins = cache["admins"][group]
     with db_session:
-        user = User[callback.from_user.id]
+        user = User.get(id=callback.from_user.id)
+        if not user:
+            return logger.debug(f"User {callback.from_user.id} not found,"
+                                f" adding to database")
     admins = format_admins(
         creator=creator,
         admins=admins,
@@ -84,6 +96,7 @@ async def show_admins(client: Client, callback: types.CallbackQuery):
 async def refresh_admins_list(client: Client, callback: types.CallbackQuery):
     _, _, group = callback.data.partition('=')
     group = int(group)
+    logger.info(f"Fetching admins list for {group}")
     cache["admins"].insert(group, await fetch_admins(client, group))
     try:
         await show_admins(client, callback)

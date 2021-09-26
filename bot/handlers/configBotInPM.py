@@ -4,6 +4,7 @@ from ..languages_enum import LanguagesEnum
 from ..database import Group
 from pyrogram import Client, types
 from pony.orm import db_session
+from loguru import logger
 
 
 def split(array: list, group: int) -> list:
@@ -18,9 +19,12 @@ def split(array: list, group: int) -> list:
 async def start_config(client: Client, message: types.Message):
     group = int(message.command[-1])
     with db_session:
-        group_db_obj = Group[group]
-        allowed_admin = message.from_user.id in [x.id for x in (*group_db_obj.administrators, group_db_obj.owner)]
-    if allowed_admin:
+        group_db_obj = Group.get(id=group)
+        if not group_db_obj:
+            logger.error(f"Group {group} is not in database")
+            return  # todo: tell the user to re-add the bot to his group
+        is_allowed_admin = message.from_user.id in [x.id for x in (*group_db_obj.administrators, group_db_obj.owner)]
+    if is_allowed_admin:
         await client.send_message(
             message.chat.id,
             strings.choose_language.format(message.from_user.first_name),

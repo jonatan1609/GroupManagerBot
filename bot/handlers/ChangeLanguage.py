@@ -4,6 +4,7 @@ from pony.orm import db_session
 from ..database import Group, User
 from .. import strings, config
 from .start import keyboard
+from loguru import logger
 
 
 @Client.on_callback_query(change_language_callback)
@@ -11,14 +12,18 @@ async def change_language_callback(_: Client, callback: types.CallbackQuery):
     language, _, group = callback.data.split("=")[1].partition(';')
     with db_session:
         if callback.data[4] == "s":
-            group = Group.get(id=int(group))
-            if group and group.default_language != language:
-                group.default_language = language
+            db_group = Group.get(id=int(group))
+            if db_group and db_group.default_language != language:
+                db_group.default_language = language
+            elif not db_group:
+                logger.debug(f"Group {group} not found")
             await callback.answer(getattr(strings, language).language_has_been_changed)
             await callback.message.edit_text(getattr(strings, language).welcome_to_panel)
         else:
             user = User.get(id=callback.from_user.id)
             if not user:
+                logger.debug(f"User {callback.from_user.id} not found,"
+                             f" adding to database")
                 user = User(
                     id=callback.from_user.id,
                     first_name=callback.from_user.first_name,
