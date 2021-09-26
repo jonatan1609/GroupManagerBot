@@ -18,7 +18,7 @@ async def i_am_a_human(_: Client, callback: types.CallbackQuery):
     with db_session:
         group = Group.get(id=callback.message.chat.id)
         if not group:
-            logger.error(f"Group {callback.message.chat.id} not found!")
+            return logger.error(f"Group {callback.message.chat.id} not found!")
     if future:
         future.set_result(True)
     else:
@@ -39,7 +39,7 @@ async def i_am_a_bot(_: Client, callback: types.CallbackQuery):
     with db_session:
         group = Group.get(id=callback.message.chat.id)
         if not group:
-            logger.error(f"Group {callback.message.chat.id} not found!")
+            return logger.error(f"Group {callback.message.chat.id} not found!")
     if future:
         future.set_result(False)
     else:

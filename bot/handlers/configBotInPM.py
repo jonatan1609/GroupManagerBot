@@ -2,7 +2,7 @@ from ..filters import start_config
 from .. import strings
 from ..languages_enum import LanguagesEnum
 from ..database import Group
-from pyrogram import Client, types
+from pyrogram import Client, types, errors
 from pony.orm import db_session
 from loguru import logger
 
@@ -22,7 +22,11 @@ async def start_config(client: Client, message: types.Message):
         group_db_obj = Group.get(id=group)
         if not group_db_obj:
             logger.error(f"Group {group} is not in database")
-            return  # todo: tell the user to re-add the bot to his group
+            await message.reply(strings.readd_group, quote=False)
+            try:
+                return await client.send_message(group, strings.readd_group)
+            except errors.RPCError as e:
+                return logger.error(e.MESSAGE)
         is_allowed_admin = message.from_user.id in [x.id for x in (*group_db_obj.administrators, group_db_obj.owner)]
     if is_allowed_admin:
         await client.send_message(

@@ -17,6 +17,9 @@ async def change_language_callback(_: Client, callback: types.CallbackQuery):
                 db_group.default_language = language
             elif not db_group:
                 logger.debug(f"Group {group} not found")
+                return await callback.message.edit(
+                    getattr(strings, language).group_not_found
+                )
             await callback.answer(getattr(strings, language).language_has_been_changed)
             await callback.message.edit_text(getattr(strings, language).welcome_to_panel)
         else:

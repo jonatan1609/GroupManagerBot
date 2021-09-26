@@ -13,6 +13,7 @@ from loguru import logger
 async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
     if is_member(member):
         if member.new_chat_member.user.is_self:
+            logger.info(f"Bot was added to group {member.chat.id} [{member.chat.title!r}]")
             with db_session:
                 creator, administrators = await fetch_admins(client, member.chat.id)
                 user = User.get(id=creator[0])
@@ -50,7 +51,10 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             group = Group.get(id=member.chat.id)
             if not group:
                 logger.error(f"Group {member.chat.id} is not in database")
-                return  # todo: tell the user to re-add the bot to his group
+                return await client.send_message(
+                    member.chat.id,
+                    strings.readd_group
+                )
         logger.info(f"Restricting user {member.new_chat_member.user.id}")
         await member.chat.restrict_member(
             member.new_chat_member.user.id,
