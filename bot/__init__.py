@@ -9,7 +9,7 @@ from loguru import logger
 from .cache import Cache
 
 
-__version__ = "1.0.10"
+__version__ = "1.0.11"
 Session.notice_displayed = True
 futures = {}
 logger.info(f'Loading config file from '
