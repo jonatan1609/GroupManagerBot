@@ -24,9 +24,14 @@ async def start_config(client: Client, message: types.Message):
             logger.error(f"Group {group} is not in database")
             await message.reply(strings.readd_group, quote=False)
             try:
-                return await client.send_message(group, strings.readd_group)
+                await client.send_message(group, strings.readd_group)
             except errors.RPCError as e:
-                return logger.error(e.MESSAGE)
+                logger.error(e.MESSAGE)
+            try:
+                await client.leave_chat(group)
+            except errors.RPCError as e:
+                logger.error(e.MESSAGE)
+            return
         is_allowed_admin = message.from_user.id in [x.id for x in (*group_db_obj.administrators, group_db_obj.owner)]
     if is_allowed_admin:
         await client.send_message(

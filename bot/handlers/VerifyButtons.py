@@ -19,12 +19,16 @@ async def get_future(client, callback):
         if not group:
             logger.error(f"Group {callback.message.chat.id} not found!")
             try:
-                return await client.send_message(
+                await client.send_message(
                     callback.message.chat.id,
                     strings.readd_group
                 )
             except errors.RPCError as e:
-                return logger.error(e.MESSAGE)
+                logger.error(e.MESSAGE)
+            try:
+                await callback.message.chat.leave()
+            except errors.RPCError as e:
+                logger.error(e.MESSAGE)
     return future, group
 
 

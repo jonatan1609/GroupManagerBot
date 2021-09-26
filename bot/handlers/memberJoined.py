@@ -51,10 +51,11 @@ async def member_has_joined(client: Client, member: types.ChatMemberUpdated):
             group = Group.get(id=member.chat.id)
             if not group:
                 logger.error(f"Group {member.chat.id} is not in database")
-                return await client.send_message(
+                await client.send_message(
                     member.chat.id,
                     strings.readd_group
                 )
+                return await member.chat.leave()
         logger.info(f"Restricting user {member.new_chat_member.user.id}")
         await member.chat.restrict_member(
             member.new_chat_member.user.id,
