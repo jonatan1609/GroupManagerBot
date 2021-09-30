@@ -1,4 +1,5 @@
 from pyrogram.types import ChatMemberUpdated
+from pyrogram import errors
 
 
 async def fetch_admins(client, chat_id):
@@ -16,7 +17,10 @@ async def fetch_admins(client, chat_id):
 
 
 async def fetch_group_name(client, chat_id):
-    return (await client.get_chat(chat_id)).title
+    try:
+        return (await client.get_chat(chat_id)).title
+    except errors.RPCError:
+        return -1
 
 
 def format_admins(
