@@ -17,6 +17,7 @@ which you can obtain from https://my.telegram.org, and bot_token which you can g
 ```
 sh start.sh
 ```
+In case you  want to skip the process of packages installation/updates you can run it with the flag `-s` | `--skip`.
 
 ## Docker
 > Use `:latest` for latest published version, you can specify a release or even a branch and commit.
@@ -37,4 +38,4 @@ e.g `:master-d1dc0d4`
    
 # support
 
-You can join our [Telegram Group](https://t.me/GMB_group) to get live support with either the bot itself or related stuff.
+You can join our [Telegram Group](https://t.me/GMBot_group) to get live support with either the bot itself or related stuff.
