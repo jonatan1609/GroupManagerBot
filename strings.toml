@@ -21,6 +21,7 @@ readd_group = "ככל הנראה הבוט התווסף לקבוצה כאשר ה�
     choose_group = "תבחר קבוצה רצויה מהתפריט למטה"
     no_groups = "אין לך עדיין שום קבוצה."
     group_not_found = "הקבוצה לא נמצאה, ככה הנראה הבוט התווסף לקבוצה בזמן שהבוט היה כבוי, אנא הסר את הבוט מהקבוצה והוסף מחדש"
+    chats_not_found = "הקבוצות הבאות לא נמצאו, הן ככל הנראה נמחקו או לא קיימות יותר:\n {}"
 
 [english]
     features = ["An 'I am a human' button to prevent spam"]
@@ -39,3 +40,4 @@ readd_group = "ככל הנראה הבוט התווסף לקבוצה כאשר ה�
     choose_group = "Choose the desired group from the menu below"
     no_groups = "You don't have any groups yet."
     group_not_found = "Most likely the bot was added to the group while the bot was down, please remove the bot from your group and then re-add it"
+    chats_not_found = "The following chats were not found, they might be deleted or not exist anymore: \n{}"

@@ -1,4 +1,4 @@
-from ..database import User
+from ..database import User, Group
 from pony.orm import db_session
 from pyrogram import Client, types, errors
 from ..utils import fetch_admins, fetch_group_name, format_admins
@@ -40,15 +40,30 @@ async def show_admins_list(client: Client, message: types.Message):
                     [group for group in user.owning_groups]
             )
         ])
+        not_found = []
         for group in groups:
             if group not in cache["names"]:
                 logger.info(f"fetching group name for {group}")
-                cache["names"].insert(
-                    group, await fetch_group_name(client, group)
-                )
-            if group not in cache["admins"]:
+                name = await fetch_group_name(client, group)
+                if name != -1:
+                    cache["names"].insert(
+                        group, name
+                    )
+                else:
+                    not_found.append(group)
+                    logger.error(f"Could not find group {group}")
+            if group not in cache["admins"] and group not in not_found:
                 logger.info(f"Fetching admins list for {group}")
                 cache["admins"].insert(group, await fetch_admins(client, group))
+        if not_found:
+            m = getattr(strings, user.language).chats_not_found.format("\n".join(map(str, not_found)))
+            for g in not_found:
+                groups.remove(g)
+                with db_session:
+                    db_g = Group.get(id=g)
+                    if db_g:
+                        db_g.delete()
+            await message.reply(m, quote=False)
         if groups:
             await message.reply(
                 getattr(strings, user.language).choose_group,
