@@ -12,5 +12,4 @@ pyaes==1.6.1
 Pygments==2.10.0
 Pyrogram @ git+https://github.com/jonatan1609/pyrogram@718048790fd0d0b9dc8ccd6c8e5b5f80e6093159
 PySocks==1.7.1
-sqlite-web==0.3.8
 Werkzeug==2.0.1
