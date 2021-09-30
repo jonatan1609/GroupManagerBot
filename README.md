@@ -1,9 +1,9 @@
 # GroupManagerBot
 This bot will help you to manage your groups and to avoid spam.
-
 # Installation
+`git clone https://github.com/jonatan1609/GroupManagerBot.git`
 
-You can run the bot on your environment or use docker.
+And then you can run the bot on your python virtual environment (venv) or use docker.
 
 ## configuration
 
