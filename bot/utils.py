@@ -24,7 +24,7 @@ async def fetch_group_name(client, chat_id):
 
 
 def format_admins(
-        creator: str,
+        creator: tuple,
         admins: list,
         wrap: callable = str,
         key=lambda x: x
