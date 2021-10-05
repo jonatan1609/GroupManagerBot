@@ -1,6 +1,6 @@
 async-lru==1.0.2
 dynaconf==3.1.7
-Jinja2==3.0.1
+Jinja2==3.0.2
 loguru==0.5.3
 MarkupSafe==2.0.1
 pony==0.7.14
