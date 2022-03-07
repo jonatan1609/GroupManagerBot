@@ -3,7 +3,7 @@ dynaconf==3.1.7
 Jinja2==3.0.2
 loguru==0.5.3
 MarkupSafe==2.0.1
-pony==0.7.14
+pony==0.7.16
 pyaes==1.6.1
 Pyrogram @ git+https://github.com/jonatan1609/pyrogram@bbb776e127073feab83ed45d821b0c0a801b416b
 PySocks==1.7.1
